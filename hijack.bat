@@ -5,6 +5,8 @@ set /p pass="Configure new password: "
 :: Added current password incase you already changed it
 set curpass=student
 
+powershell -Command "(New-Object Net.WebClient).DownloadFile('https://download.sysinternals.com/files/PSTools.zip', 'PSTools.zip')" :: get psexec
+7z e PSTools.zip
 psexec -u student -p %curpass% \\%pc% reg add "hklm\system\currentcontrolset\control\terminal server" /f /v fDenyTSConnections /t REG_DWORD /d 0
 psexec -u student -p %curpass% \\%pc% reg delete "HKEY_LOCAL_MACHINE\Software\Wow6432Node\Google\Chrome\Extensions" /f
 psexec -u student -p %curpass% \\%pc% reg add "HKEY_LOCAL_MACHINE\Software\Wow6432Node\Google\Chrome\Extensions\cjpalhdlnbpafiamejdnhcphjbkeiagm" /f /v "update_url" /t REG_SZ /d "https://clients2.google.com/service/update2/crx"
